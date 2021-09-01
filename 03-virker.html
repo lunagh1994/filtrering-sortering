@@ -39,6 +39,8 @@
     </style>
   </head>
   <body>
+    <h1>Alle</h1>
+
     <nav>
       <button data-troende="alle">Alle</button>
       <button data-troende="ja" class="valgt">Troende</button>
@@ -58,6 +60,7 @@
 
   <script>
     const header = document.querySelector("header h1");
+
     const url = "https://persongalleri-5d3e.restdb.io/rest/persongalleri";
 
     const options = {
@@ -68,19 +71,9 @@
 
     document.addEventListener("DOMContentLoaded", start);
     let personer;
-    let filter = "alle";
+    let filter = "ja";
 
     function start() {
-      const filterKnapper = document.querySelectorAll("nav button");
-      filterKnapper.forEach((knap) =>
-        knap.addEventListener("click", filtrerPersoner)
-      );
-      hentdata();
-    }
-
-    function filtrerPersoner() {
-      filter = this.dataset.troende;
-
       hentdata();
     }
 
@@ -96,12 +89,10 @@
 
       const container = document.querySelector("#liste");
       const galleriTemplate = document.querySelector("template");
-      container.textContent = "";
 
       // hvert objekt i array(liste) kan rulles ud hvert for sig og ligge i rigtigt orden 0-3fx //
       json.forEach((person) => {
-        console.log("Troende", person.troende);
-        if (filter == person.troende || filter == "alle") {
+        if (filter == person.troende) {
           let klon = galleriTemplate.cloneNode(true).content;
           klon.querySelector("img").src = "faces/" + person.billede;
           klon.querySelector("h2").textContent =
